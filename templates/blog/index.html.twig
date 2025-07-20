@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog index{% endblock %}
+
+{% block body %}
+    <h1>Blog index</h1>
+        {% for blog in blogs %}
+            <div class="card p-3">
+                <h2>{{ blog.title }}</h2>
+                {% if blog.image %}
+                <img src="{{ asset('uploads/' ~ blog.image) }}" alt="{{ blog.title }}" style="max-width: 300px; max-height: 300px;">
+                {% endif %}
+                <small>Author: {{ blog.user.email }}</small>
+                <p>{{ blog.text | slice(0, 500) ~ '...' }}}}</p>
+                <a style="width: 100px;" class="btn btn-primary mt-3" href="{{ path('app_blog_show', {'id': blog.id}) }}">show</a>
+                <a style="width: 100px;" class="btn btn-success mt-3" href="{{ path('app_blog_edit', {'id': blog.id}) }}">edit</a>
+            </div>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+
+    <a style="width: 150px;" class="btn btn-primary mt-3" href="{{ path('app_blog_new') }}">Create new</a>
+{% endblock %}
